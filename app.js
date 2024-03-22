@@ -8,7 +8,7 @@ var cors = require("cors");
 const fs = require("fs");
 const YAML = require("yaml");
 const swaggerUi = require("swagger-ui-express");
-const file = fs.readFileSync("doc/swagger.yaml", "utf8");
+const file = fs.readFileSync("/doc/swagger.yaml", "utf8");
 const swaggerDocument = YAML.parse(file);
 
 const GlobalValidator = require("./app/validation/GlobalValidator");
