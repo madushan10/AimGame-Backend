@@ -37,44 +37,22 @@ exports.createTeamMember = async (req, res, next) => {
       }
   };
 
-// exports.updateTeamMember = async (req, res, next) => {
-//     const { id } = req.params;
-//     const validationRule = {
-//         name: Joi.string().required(),
-//         email: Joi.string().required(),
-//         designation: Joi.string().required(),
-//         phone: Joi.string().required(),
-//       };
-//     try {
-//       await validate(validationRule, req);
-//       const data = await teamService.updateTeamMember(id, req.body);
-//       res.status(201).json({ success: true, status: 201, data });
-//     } catch (error) {
-//       next(error);
-//     }
-//   };
 exports.updateTeamMember = async (req, res, next) => {
-  const { id } = req.params;
-  const validationRule = {
-      name: Joi.string().required(),
-      email: Joi.string().email().required(),  // Ensure email validation is correct
-      designation: Joi.string().required(),
-      phone: Joi.string().required(),
-  };
-
-  try {
+    const { id } = req.params;
+    const validationRule = {
+        name: Joi.string().required(),
+        email: Joi.string().required(),
+        designation: Joi.string().required(),
+        phone: Joi.string().required(),
+      };
+    try {
       await validate(validationRule, req);
       const data = await teamService.updateTeamMember(id, req.body);
       res.status(201).json({ success: true, status: 201, data });
-  } catch (error) {
-      if (error.isJoi) {
-          // Joi validation error
-          res.status(400).json({ success: false, status: 400, message: error.details[0].message });
-      } else {
-          next(error);
-      }
-  }
-};
+    } catch (error) {
+      next(error);
+    }
+  };
   exports.searchTeamMembers = async (req, res, next) => {
     try {
       const { searchValue } = req.params;
