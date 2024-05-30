@@ -95,7 +95,12 @@ exports.createUser = async (user) => {
     email: user.email,
   }).exec();
   if (userEmailExists) {
-    throw new notFoundException("Email already exists");
+    if(userEmailExists.isActive == true){
+      throw new notFoundException("Email already exists");
+    }
+    else{
+      throw new notFoundException("Email already exists, But OTP is not confirmed");
+    }
   } else {
     const saltRounds = 10;
 
