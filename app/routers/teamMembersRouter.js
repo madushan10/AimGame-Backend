@@ -8,7 +8,9 @@ router
   .route("/")
   .post([validateToken, uploadProfilePhoto], TeamController.createTeamMember)
   .get(validateToken, TeamController.getTeamMembers);
-
+router
+  .route("/designation/presales")
+  .get(validateToken, TeamController.getTeamMembersPresales);
 router
   .route("/:id")
   .put(validateToken, TeamController.updateTeamMember)

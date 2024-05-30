@@ -12,7 +12,14 @@ exports.getTeamMembers = async (req, res, next) => {
     next(error);
   }
 };
-
+exports.getTeamMembersPresales = async (req, res, next) => {
+  try {
+    const data = await teamService.getTeamMembersPresales();
+    res.status(200).json({ success: true, status: 200, data });
+  } catch (error) {
+    next(error);
+  }
+};
 exports.createTeamMember = async (req, res, next) => {
 
     const validationRule = {

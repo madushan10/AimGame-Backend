@@ -14,7 +14,13 @@ exports.getTeamMembers = async () => {
   });
   return users;
 };
-
+exports.getTeamMembersPresales = async () => {
+  const users = await UserModel.find({
+    userRole: "team member",
+    designation: "Presales",
+  });
+  return users;
+};
 exports.createTeamMember = async (user) => {
     const userEmailExists = await UserModel.findOne({
       email: user.email,
