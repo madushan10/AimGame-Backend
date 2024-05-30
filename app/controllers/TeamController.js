@@ -37,22 +37,46 @@ exports.createTeamMember = async (req, res, next) => {
       }
   };
 
+// exports.updateTeamMember = async (req, res, next) => {
+//     const { id } = req.params;
+//     const validationRule = {
+//         name: Joi.string().required(),
+//         email: Joi.string().required(),
+//         designation: Joi.string().required(),
+//         phone: Joi.string().required(),
+//       };
+//     try {
+//       await validate(validationRule, req);
+//       const data = await teamService.updateTeamMember(id, req.body);
+//       res.status(201).json({ success: true, status: 201, data });
+//     } catch (error) {
+//       next(error);
+//     }
+//   };
 exports.updateTeamMember = async (req, res, next) => {
-    const { id } = req.params;
-    const validationRule = {
-        name: Joi.string().required(),
-        email: Joi.string().required(),
-        designation: Joi.string().required(),
-        phone: Joi.string().required(),
-      };
-    try {
-      await validate(validationRule, req);
+  const { id } = req.params;
+
+  const validationRule = Joi.object({
+      name: Joi.string().required(),
+      email: Joi.string().email().required(),
+      designation: Joi.string().required(),
+      phone: Joi.string().required().pattern(/^\d+$/), 
+  });
+
+  try {
+      await validationRule.validateAsync(req.body, { abortEarly: false }); 
+
       const data = await teamService.updateTeamMember(id, req.body);
-      res.status(201).json({ success: true, status: 201, data });
-    } catch (error) {
-      next(error);
-    }
-  };
+      res.status(200).json({ success: true, status: 200, data }); // 
+  } catch (error) {
+      console.error('Validation or update error:', error); 
+      if (error.isJoi) { 
+          res.status(422).json({ success: false, status: 422, errors: error.details });
+      } else {
+          next(error); 
+      }
+  }
+};
   exports.searchTeamMembers = async (req, res, next) => {
     try {
       const { searchValue } = req.params;
