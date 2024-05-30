@@ -13,7 +13,7 @@ router
   .get(validateToken, TeamController.getTeamMembersPresales);
 router
   .route("/:id")
-  .put(validateToken, TeamController.updateTeamMember)
+  .post(validateToken, TeamController.updateTeamMember)
   router
   .route("/search/:searchValue")
   .get(validateToken, TeamController.searchTeamMembers);
