@@ -36,11 +36,7 @@ exports.createTeamMember = async (user) => {
       );
   
       const otp = Math.floor(100000 + Math.random() * 900000);
-      if (
-        user.image !== null &&
-        user.image !== undefined &&
-        user.image !== ""
-      ) {
+      if (user.image)  {
         const image = user.image;
         const imageData = await s3service.upload(image, "clients");
         var imagePath = imageData.Location;
@@ -74,16 +70,14 @@ exports.createTeamMember = async (user) => {
   };
 
   exports.updateTeamMember = async (id, user) => {
-    
-    if (
-        user.image !== null &&
-        user.image !== undefined &&
-        user.image !== ""
-      ) {
+    console.log("user.image",user.image);
+    if (user.image) { 
         const image = user.image;
         const imageData = await s3service.upload(image, "clients");
         user.image = imageData.Location;
+        console.log("imageData.Location",imageData.Location);
       }
+      
       const updatedUser = await UserModel.findByIdAndUpdate(id, user, {
         new: true,
       });
