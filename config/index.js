@@ -11,6 +11,5 @@ module.exports = {
     host: process.env.DB_HOST ?? "cluster0.o4rpy.mongodb.net",
     user: process.env.DB_USER ?? "yohan",
     password: process.env.DB_PASSWORD ?? "123admin",
-  },
-  
+  }
 };

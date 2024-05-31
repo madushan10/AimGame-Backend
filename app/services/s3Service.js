@@ -6,15 +6,15 @@ exports.upload = (base64, folder) => {
   var bitmap = new Buffer.from(base64Image, "base64");
 
   AWS.config.update({
-    accessKeyId: "AKIA26SJZPW5L5CGFNAJ",
-    secretAccessKey: "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",
-    region: "ap-southeast-1",
+    accessKeyId: process.env.ACCESS_KEY,
+    secretAccessKey: process.env.SECRET_KEY,
+    region: process.env.DEFAULT_REGION,
   });
 
   var s3 = new AWS.S3();
 
   const params = {
-    Bucket: "aimgame-dev",
+    Bucket: process.env.BUCKET_NAME,
     Body: bitmap,
     ContentEncoding: "base64",
     ContentType: "image/jpeg",
@@ -41,14 +41,14 @@ exports.upload = (base64, folder) => {
 
 exports.copyImage = (image) => {
   AWS.config.update({
-    accessKeyId: "AKIA26SJZPW5L5CGFNAJ",
-    secretAccessKey: "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",
-    region: "ap-southeast-1",
+    accessKeyId: process.env.ACCESS_KEY,
+    secretAccessKey: process.env.SECRET_KEY,
+    region: process.env.DEFAULT_REGION,
   });
 
   var s3 = new AWS.S3();
 
-  const bucketName = "aimgame-dev";
+  const bucketName = process.env.BUCKET_NAME;
   const sourceFolder = "temp";
   const fileName = image.split("/").pop();
   const destFolder = "blogs";
