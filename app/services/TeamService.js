@@ -70,20 +70,18 @@ exports.createTeamMember = async (user) => {
   };
 
   exports.updateTeamMember = async (id, user) => {
-    console.log("user.image",user.image);
-    if (user.image) { 
+    if (user.image) {
         const image = user.image;
-        const imageData = await s3service.upload(image, "clients");
-        user.image = imageData.Location;
-        console.log("imageData.Location",imageData.Location);
-      }
-      
-      const updatedUser = await UserModel.findByIdAndUpdate(id, user, {
-        new: true,
-      });
-      return updatedUser;
-  };
-
+        try {
+            const imageData = await s3service.upload(image, "clients");
+            user.image = imageData.Location;
+        } catch (error) {
+            throw new Error('Image upload failed: ' + error.message);
+        }
+    }
+    const updatedUser = await UserModel.findByIdAndUpdate(id, user, { new: true });
+    return updatedUser;
+};
   exports.searchTeamMembers = async (searchValue) => {
     const users = await UserModel.find({
       userRole: "team member",

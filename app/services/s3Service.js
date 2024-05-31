@@ -77,20 +77,18 @@ exports.upload = (base64, folder) => {
 //   });
 // };
 exports.upload = (base64, folder) => {
-  let base64Image = base64.split(";base64,").pop();
-  var bitmap = Buffer.from(base64Image, "base64");
-
+  const base64Image = base64.split(";base64,").pop();
+  const buffer = Buffer.from(base64Image, "base64");
+  const s3 = new AWS.S3();
   AWS.config.update({
       accessKeyId: process.env.ACCESS_KEY,
       secretAccessKey: process.env.SECRET_KEY,
       region: process.env.DEFAULT_REGION,
   });
 
-  var s3 = new AWS.S3();
-
   const params = {
       Bucket: process.env.BUCKET_NAME,
-      Body: bitmap,
+      Body: buffer,
       ContentEncoding: "base64",
       ContentType: "image/jpeg",
       ACL: "public-read",
@@ -98,12 +96,11 @@ exports.upload = (base64, folder) => {
   };
 
   return new Promise((resolve, reject) => {
-      s3.upload(params, function (err, data) {
+      s3.upload(params, (err, data) => {
           if (err) {
-              console.log("Error", err);
+              console.log("S3 Upload Error", err);
               reject(err);
-          }
-          if (data) {
+          } else {
               resolve(data);
           }
       });
