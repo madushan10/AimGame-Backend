@@ -83,7 +83,7 @@ exports.upload = (base64, folder) => {
   AWS.config.update({
       accessKeyId: process.env.ACCESS_KEY,
       secretAccessKey: process.env.SECRET_KEY,
-      region: process.env.DEFAULT_REGION,
+      region: "ap-southeast-1",
   });
 
   const params = {
