@@ -75,15 +75,15 @@ exports.createTeamMember = async (user) => {
 
   exports.updateTeamMember = async (id, user) => {
     
-    // if (
-    //     user.image !== null &&
-    //     user.image !== undefined &&
-    //     user.image !== ""
-    //   ) {
-    //     const image = user.image;
-    //     const imageData = await s3service.upload(image, "clients");
-    //     user.image = imageData.Location;
-    //   }
+    if (
+        user.image !== null &&
+        user.image !== undefined &&
+        user.image !== ""
+      ) {
+        const image = user.image;
+        const imageData = await s3service.upload(image, "clients");
+        user.image = imageData.Location;
+      }
       const updatedUser = await UserModel.findByIdAndUpdate(id, user, {
         new: true,
       });
