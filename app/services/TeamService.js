@@ -79,6 +79,7 @@ exports.createTeamMember = async (user) => {
             throw new Error('Image upload failed: ' + error.message);
         }
     }
+    console.log("user.image",user.image);
     const updatedUser = await UserModel.findByIdAndUpdate(id, user, { new: true });
     return updatedUser;
 };
