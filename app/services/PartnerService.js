@@ -88,10 +88,21 @@ exports.filterByWorkspace = async (workspaceId) => {
 exports.companies = async () => {
   //.log(123);
   //const companies = await PartnerModel.distinct("company");
-  const companies = await PartnerModel.findAll({
-    attributes: ["company"],
-    group: ["company"],
-  });
+  const companies = await Partner.aggregate([
+    {
+      $group: {
+        _id: "$company",
+        companyIds: { $push: "$_id" }
+      }
+    },
+    {
+      $project: {
+        _id: 0,
+        company: "$_id",
+        ids: "$companyIds"
+      }
+    }
+  ]);
   return companies;
 };
 exports.partnersFilter = async () => {
