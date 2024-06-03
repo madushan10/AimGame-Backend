@@ -84,9 +84,14 @@ exports.filterByWorkspace = async (workspaceId) => {
   const partners = await PartnerModel.find({ workspaceId: workspaceId });
   return partners;
 };
+
 exports.companies = async () => {
   //.log(123);
-  const companies = await PartnerModel.distinct("company");
+  //const companies = await PartnerModel.distinct("company");
+  const companies = await PartnerModel.findAll({
+    attributes: ["company"],
+    group: ["company"],
+  });
   return companies;
 };
 exports.partnersFilter = async () => {
