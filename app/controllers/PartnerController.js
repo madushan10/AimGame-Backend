@@ -84,3 +84,11 @@ exports.companies = async (req, res, next) => {
     next(error);
   }
 };
+exports.partnersFilter = async (req, res, next) => {
+  try {
+    const data = await partnerService.partnersFilter();
+    res.status(200).json({ success: true, status: 200, data });
+  } catch (error) {
+    next(error);
+  }
+};

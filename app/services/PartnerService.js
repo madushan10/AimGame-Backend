@@ -85,7 +85,12 @@ exports.filterByWorkspace = async (workspaceId) => {
   return partners;
 };
 exports.companies = async () => {
-  console.log(123);
+  //.log(123);
   const companies = await PartnerModel.distinct("company");
   return companies;
+};
+exports.partnersFilter = async () => {
+  console.log(req.body);
+  const partners = await PartnerModel.distinct("company");
+  return partners;
 };
