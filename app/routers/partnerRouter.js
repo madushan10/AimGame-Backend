@@ -26,4 +26,8 @@ router
 router
 .route("/filter/companies/get")
 .get(validateToken, partnerController.companies);
+
+router
+.route("/filter/partners/get")
+.post(validateToken, partnerController.partnersFilter);
 module.exports = router;
