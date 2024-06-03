@@ -24,6 +24,6 @@ router
   .get(validateToken, partnerController.filterByWorkspace);
 
 router
-.route("/companies")
+.route("/filter/companies/get")
 .get(validateToken, partnerController.companies);
 module.exports = router;
