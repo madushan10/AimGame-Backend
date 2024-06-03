@@ -92,14 +92,14 @@ exports.companies = async () => {
     {
       $group: {
         _id: "$company",
-        companyIds: { $push: "$_id" }
+        id: { $first: "$_id" }
       }
     },
     {
       $project: {
         _id: 0,
         company: "$_id",
-        ids: "$companyIds"
+        id: 1
       }
     }
   ]);
