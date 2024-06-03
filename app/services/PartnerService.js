@@ -85,7 +85,7 @@ exports.filterByWorkspace = async (workspaceId) => {
   return partners;
 };
 exports.companies = async () => {
-  const companies = await PartnerModel.find({
+  const companies = await PartnerModel.findAll({
     attributes: ["company"],
     group: ["company"],
   });
