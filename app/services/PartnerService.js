@@ -85,6 +85,7 @@ exports.filterByWorkspace = async (workspaceId) => {
   return partners;
 };
 exports.companies = async () => {
+  console.log(123);
   const companies = await Partner.distinct("company");
   return companies;
 };
