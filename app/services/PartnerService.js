@@ -106,7 +106,24 @@ exports.companies = async () => {
   return companies;
 };
 exports.partnersFilter = async (req) => {
-  console.log(req.body);
-  const partners = await PartnerModel.distinct("company");
+  // 1. Access Data from Request Body (if applicable)
+  const filterData = req.body || {}; // Get data from request body (if provided)
+
+  // 2. Construct Filter Criteria
+  const filters = {};
+  if (filterData.workspace) {
+    filters.workspace = filterData.workspace;
+  }
+  if (filterData.client) {
+    filters.client = { $regex: new RegExp(filterData.client, 'i') }; // Case-insensitive search
+  }
+  if (filterData.company) {
+    filters.company = { $regex: new RegExp(filterData.company, 'i') }; // Case-insensitive search
+  }
+
+  // 3. Filter Partners from MongoDB
+  const partners = await PartnerModel.find(filters);
+
+  // 4. Return Filtered Partners
   return partners;
 };
