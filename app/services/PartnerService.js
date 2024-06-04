@@ -105,7 +105,7 @@ exports.companies = async () => {
   ]);
   return companies;
 };
-exports.partnersFilter = async () => {
+exports.partnersFilter = async (req) => {
   console.log(req.body);
   const partners = await PartnerModel.distinct("company");
   return partners;
