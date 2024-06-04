@@ -112,13 +112,13 @@ exports.partnersFilter = async (req) => {
   // 2. Construct Filter Criteria
   const filters = {};
   if (filterData.workspace) {
-    filters.workspace = filterData.workspace;
+    filters.workspaceId = filterData.workspace;
   }
   if (filterData.client) {
-    filters.client = { $regex: new RegExp(filterData.client, 'i') }; // Case-insensitive search
+    filters.client = { $regex: new RegExp(filterData.client, 'i') }; 
   }
   if (filterData.company) {
-    filters.company = { $regex: new RegExp(filterData.company, 'i') }; // Case-insensitive search
+    filters.company = { $regex: new RegExp(filterData.company, 'i') };
   }
 
   // 3. Filter Partners from MongoDB
