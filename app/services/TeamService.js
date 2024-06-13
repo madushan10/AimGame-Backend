@@ -85,25 +85,32 @@ exports.createTeamMember = async (user) => {
 //     return updatedUser;
 // };
 exports.updateTeamMember = async (id, user) => {
-  console.log("user.image", user.image);
-  let updateData = { ...user };
-
-  if (user.image) {
-      const image = user.image;
-      try {
-          const imageData = await s3service.upload(image, "clients");
-          updateData.image = imageData.Location;
-      } catch (error) {
-          throw new Error('Image upload failed: ' + error.message);
+  try {
+      const currentUser = await UserModel.findById(id);
+      if (!currentUser) {
+          throw new Error("User not found");
       }
-  } else {
+      if (user.image && user.image !== currentUser.image) {
+          const image = user.image;
+          try {
+              const imageData = await s3service.upload(image, "clients");
+              user.image = imageData.Location;
+          } catch (error) {
+              throw new Error('Image upload failed: ' + error.message);
+          }
+      } else {
 
-      delete updateData.image;
+          user.image = currentUser.image;
+      }
+
+      // Update the user data
+      const updatedUser = await UserModel.findByIdAndUpdate(id, user, { new: true });
+      return updatedUser;
+  } catch (error) {
+      throw new Error('Error updating user: ' + error.message);
   }
-
-  const updatedUser = await UserModel.findByIdAndUpdate(id, updateData, { new: true });
-  return updatedUser;
 };
+
   exports.searchTeamMembers = async (searchValue) => {
     const users = await UserModel.find({
       userRole: "team member",
