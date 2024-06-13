@@ -69,20 +69,40 @@ exports.createTeamMember = async (user) => {
     }
   };
 
-  exports.updateTeamMember = async (id, user) => {
-    console.log("user.image",user.image);
-    if (user.image) {
-        const image = user.image;
-        try {
-            const imageData = await s3service.upload(image, "clients");
-            user.image = imageData.Location;
-        } catch (error) {
-            throw new Error('Image upload failed: ' + error.message);
-        }
-    }
+//   exports.updateTeamMember = async (id, user) => {
+//     console.log("user.image",user.image);
+//     if (user.image) {
+//         const image = user.image;
+//         try {
+//             const imageData = await s3service.upload(image, "clients");
+//             user.image = imageData.Location;
+//         } catch (error) {
+//             throw new Error('Image upload failed: ' + error.message);
+//         }
+//     }
    
-    const updatedUser = await UserModel.findByIdAndUpdate(id, user, { new: true });
-    return updatedUser;
+//     const updatedUser = await UserModel.findByIdAndUpdate(id, user, { new: true });
+//     return updatedUser;
+// };
+exports.updateTeamMember = async (id, user) => {
+  console.log("user.image", user.image);
+  let updateData = { ...user };
+
+  if (user.image) {
+      const image = user.image;
+      try {
+          const imageData = await s3service.upload(image, "clients");
+          updateData.image = imageData.Location;
+      } catch (error) {
+          throw new Error('Image upload failed: ' + error.message);
+      }
+  } else {
+
+      delete updateData.image;
+  }
+
+  const updatedUser = await UserModel.findByIdAndUpdate(id, updateData, { new: true });
+  return updatedUser;
 };
   exports.searchTeamMembers = async (searchValue) => {
     const users = await UserModel.find({
