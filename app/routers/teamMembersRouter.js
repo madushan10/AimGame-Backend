@@ -6,7 +6,7 @@ const { validateToken, isAuth } = require("../middleware/authMiddleware");
 
 router
   .route("/")
-  .post([validateToken, uploadProfilePhoto], TeamController.createTeamMember)
+  .post([validateToken, uploadProfilePhoto], TeamController.createTeamMember) 
   .get(validateToken, TeamController.getTeamMembers);
 router
   .route("/designation/presales")

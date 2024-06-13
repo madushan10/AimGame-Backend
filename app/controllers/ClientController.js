@@ -37,7 +37,7 @@ exports.getClientById = async (req, res, next) => {
     }
     const data = await clientService.getClientById(id);
     res.status(200).json({ success: true, status: 200, data });
-  } catch (error) {
+  } catch (error) { 
     next(error);
   }
 };

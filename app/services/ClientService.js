@@ -30,7 +30,7 @@ exports.createClient = async (client) => {
     _id: client.workspaceId,
   });
   const industryTypeIdExists = await IndustryTypeModel.findOne({
-    _id: client.industryTypeId,
+    _id: client.industryTypeId, 
   });
   if (clientEmailExists) {
     console.log("Email already exists");
@@ -42,18 +42,26 @@ exports.createClient = async (client) => {
     console.log("Industry Type not found");
     throw new notFoundException("Industry Type not found");
   } else {
-    if (
-      client.photo !== null &&
-      client.photo !== undefined &&
-      client.photo !== ""
-    ) {
-      console.log("client.photo :", client.photo)
+    if (client.photo)  {
       const image = client.photo;
-      // const imageData = await s3service.upload(image, "clients");
-      const imagePath = "/uploads/" + client.photo.filename;
-      // client.photo = imageData.Location;
-      client.photo = imagePath;
+      const imageData = await s3service.upload(image, "clients");
+      client.photo = imageData.Location;
     }
+    else{
+      client.photo = null;
+    }
+    // if (
+    //   client.photo !== null &&
+    //   client.photo !== undefined &&
+    //   client.photo !== ""
+    // ) {
+    //   console.log("client.photo :", client.photo)
+    //   const image = client.photo;
+    //   // const imageData = await s3service.upload(image, "clients");
+    //   const imagePath = "/uploads/" + client.photo.filename;
+    //   // client.photo = imageData.Location;
+    //   client.photo = imagePath;
+    // }
     const newClient = await new ClientModel(client).save();
     return newClient;
   }
