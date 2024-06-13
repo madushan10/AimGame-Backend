@@ -67,6 +67,8 @@ exports.createClient = async (client) => {
   }
 };
 
+
+
 exports.updateClient = async (id, client) => {
   if (client.industryTypeId) {
     const workspaceIdExists = await WorkspaceModel.findOne({
@@ -87,14 +89,29 @@ exports.updateClient = async (id, client) => {
       throw new notFoundException("Industry Type not found");
     }
   }
-  if (
-    client.photo !== null &&
-    client.photo !== undefined &&
-    client.photo !== ""
-  ) {
-    const image = client.photo;
-    const imageData = await s3service.upload(image, "clients");
-    client.photo = imageData.Location;
+  // if (
+  //   client.photo !== null &&
+  //   client.photo !== undefined &&
+  //   client.photo !== ""
+  // ) {
+  //   const image = client.photo;
+  //   const imageData = await s3service.upload(image, "clients");
+  //   client.photo = imageData.Location;
+  // }
+  const currentUser = await ClientModel.findById(id);
+  if (!currentUser) {
+      throw new Error("User not found");
+  }
+  if (client.photo && client.photo !== currentUser.photo) {
+      const image = client.photo;
+      try {
+          const imageData = await s3service.upload(image, "clients");
+          client.photo = imageData.Location;
+      } catch (error) {
+          throw new Error('Image upload failed: ' + error.message);
+      }
+  } else {
+    client.photo = currentUser.photo;
   }
   const updatedClient = await ClientModel.findByIdAndUpdate(id, client, {
     new: true,
