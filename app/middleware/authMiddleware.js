@@ -50,7 +50,8 @@ const createToken = async (req, res, next) => {
       });
       const userID = user._id;
       const userRole = user.userRole;
-      return res.status(200).json({ success: true, code: 200, token, userID, userRole });
+      const userName = user.name;
+      return res.status(200).json({ success: true, code: 200, token, userID, userRole, userName });
     } else {
       return res
         .status(401)
