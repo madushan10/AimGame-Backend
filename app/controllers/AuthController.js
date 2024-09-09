@@ -60,7 +60,7 @@ exports.forgetPassword = async (req, res, next) => {
   }
 };
 exports.verifyUser = async (req, res, next) => {
-
+console.log("verifyUser Con Running");
   try {
     const data = await authService.verifyUser(req.body);
     res.status(201).json({ success: true, status: 201, data });
