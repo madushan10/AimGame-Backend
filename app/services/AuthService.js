@@ -94,7 +94,7 @@ exports.forgetPassword = async ({ email }) => {
   const user = await UserModel.findOne({
     email,
   });
-  console.log("user", user);
+  console.log("user", user._id);
   console.log("otp", otp);
   if (!user) {
     throw new notFoundException("Invalid Email");
@@ -111,10 +111,12 @@ exports.forgetPassword = async ({ email }) => {
                             `;
 
     const info = await sendEmail(recipientEmail, subject, htmlContent);
-    const updatedUser = await UserModel.findByIdAndUpdate(user._id, {
-      otp: otp,
-      otpExpiry: Date.now() + 600000,
-    });
+
+    const updatedUser = await UserModel.findByIdAndUpdate(
+      user._id,
+      { otp: otp },
+      { otpExpiry:  Date.now() + 600000 },
+    );
     console.log("updatedUser", updatedUser);
     return Boolean(updatedUser);
   }
