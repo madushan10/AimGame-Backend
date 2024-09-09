@@ -117,7 +117,23 @@ exports.forgetPassword = async ({ email }) => {
     return Boolean(updatedUser);
   }
 };
-
+exports.verifyUser = async ({ email, otp }) => {
+  const user = await UserModel.findOne({
+    email,
+    otp,
+    otpExpiry: { $gt: Date.now() },
+  });
+  if (!user) {
+    throw new notFoundException("Invalid OTP");
+  } else {
+    const updatedUser = await UserModel.findByIdAndUpdate(
+      user._id,
+      { isActive: true },
+      { new: true }
+    );
+    return updatedUser;
+  }
+};
 exports.resetPassword = async ({ email, otp, password }) => {
   console.log("data", email, otp, password, new Date());
   const user = await UserModel.findOne({

@@ -19,7 +19,7 @@ router.use("/clients", clientRouter);
 router.use("/funnelStatuses", funnelStatusRouter);
 router.use("/users", userRouter);
 router.use("/workspaceUsers", workspaceUser);
-router.use("/auth", authRouter);
+router.use("/auth", authRouter); 
 router.use("/partners", partner);
 router.use("/opportunities", opportunity);
 router.use("/client-organizations", clientOrganizations);

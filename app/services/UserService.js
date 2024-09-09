@@ -135,23 +135,7 @@ exports.createUser = async (user) => {
   }
 };
 
-exports.verifyUser = async ({ email, otp }) => {
-  const user = await UserModel.findOne({
-    email,
-    otp,
-    otpExpiry: { $gt: Date.now() },
-  });
-  if (!user) {
-    throw new notFoundException("Invalid OTP");
-  } else {
-    const updatedUser = await UserModel.findByIdAndUpdate(
-      user._id,
-      { isActive: true },
-      { new: true }
-    );
-    return updatedUser;
-  }
-};
+
 
 exports.updateUser = async (id, user) => {
   if (user.email) {

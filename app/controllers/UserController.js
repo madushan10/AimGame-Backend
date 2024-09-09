@@ -52,15 +52,7 @@ exports.createUser = async (req, res, next) => {
   }
 };
 
-exports.verifyUser = async (req, res, next) => {
-  try {
-    await validate(validationRules.verifyUser, req);
-    const data = await userService.verifyUser(req.body);
-    res.status(201).json({ success: true, status: 201, data });
-  } catch (error) {
-    next(error);
-  }
-};
+
 
 exports.updateUser = async (req, res, next) => {
   const { id } = req.params;

@@ -18,8 +18,6 @@ router
   .route("/:id/workspaces/:workspaceId/details")
   .get(validateToken, userController.getUserDetailsByUserIdAndWorkspaceId);
 
-router.route("/verify").post(userController.verifyUser);
- 
 router
   .route("/my/workspaces")
   .get(validateToken, userController.getAllWorkspacesByUser);
