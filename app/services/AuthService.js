@@ -95,6 +95,7 @@ exports.forgetPassword = async ({ email }) => {
     email,
   });
   console.log("user", user);
+  console.log("otp", otp);
   if (!user) {
     throw new notFoundException("Invalid Email");
   } else {
