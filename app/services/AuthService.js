@@ -118,12 +118,13 @@ exports.forgetPassword = async ({ email }) => {
   }
 };
 exports.verifyUser = async ({ email, otp }) => {
-  console.log("verifyUser Ser Running");
 
+  console.log("verifyUser Ser Running");
   const user = await UserModel.findOne({
     email,
     otp,
   });
+  console.log(email, otp,user);
   if (!user) {
     throw new notFoundException("Invalid OTP");
   } else {
