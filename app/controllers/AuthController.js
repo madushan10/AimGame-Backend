@@ -60,8 +60,9 @@ exports.forgetPassword = async (req, res, next) => {
   }
 };
 exports.verifyUser = async (req, res, next) => {
+
   try {
-    await validate(validationRules.verifyUser, req);
+    await validate(req);
     const data = await authService.verifyUser(req.body);
     res.status(201).json({ success: true, status: 201, data });
   } catch (error) {
