@@ -94,6 +94,7 @@ exports.forgetPassword = async ({ email }) => {
   const user = await UserModel.findOne({
     email,
   });
+  console.log("user", user);
   if (!user) {
     throw new notFoundException("Invalid Email");
   } else {
