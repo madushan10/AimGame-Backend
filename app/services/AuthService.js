@@ -121,7 +121,6 @@ exports.verifyUser = async ({ email, otp }) => {
   const user = await UserModel.findOne({
     email,
     otp,
-    otpExpiry: { $gt: Date.now() },
   });
   if (!user) {
     throw new notFoundException("Invalid OTP");
