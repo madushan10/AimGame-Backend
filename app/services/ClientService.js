@@ -32,10 +32,11 @@ exports.createClient = async (client) => {
   const industryTypeIdExists = await IndustryTypeModel.findOne({
     _id: client.industryTypeId, 
   });
+  console.log("clientEmailExists", clientEmailExists);
   if (clientEmailExists) {
     console.log("Email already exists");
     throw new notFoundException("Email already exists");
-  } else if (!workspaceIdExists) {
+  } else if (!workspaceIdExists) { 
     console.log("Workspace not found");
     throw new notFoundException("Workspace not found");
   } else if (!industryTypeIdExists) {
