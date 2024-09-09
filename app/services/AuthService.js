@@ -89,7 +89,7 @@ exports.selectWorkspace = async ({ email, password, workspaceId }) => {
 };
 
 exports.forgetPassword = async ({ email }) => {
-  const otp = Math.floor(100000 + Math.random() * 900000);
+  const otp =  Math.floor(100000 + Math.random() * 900000);
 
   const user = await UserModel.findOne({
     email,
@@ -117,7 +117,7 @@ exports.forgetPassword = async ({ email }) => {
       { otp: otp },
       { otpExpiry:  Date.now() + 600000 },
     );
-    console.log("updatedUser", updatedUser);
+    //console.log("updatedUser", updatedUser);
     return Boolean(updatedUser);
   }
 };
