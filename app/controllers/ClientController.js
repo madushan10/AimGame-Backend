@@ -51,6 +51,7 @@ exports.createClient = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+  
 };
 
 exports.updateClient = async (req, res, next) => {
