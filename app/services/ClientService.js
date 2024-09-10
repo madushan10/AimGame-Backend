@@ -24,7 +24,6 @@ exports.getClientById = async (id) => {
 
 exports.createClient = async (client) => {
 
-  console.log("client.industryTypeId",client.client.industryTypeId);
   const clientEmailExists = await ClientModel.findOne({
     email: client.email,
   });
