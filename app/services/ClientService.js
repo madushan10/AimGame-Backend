@@ -23,7 +23,9 @@ exports.getClientById = async (id) => {
 };
 
 exports.createClient = async (client) => {
-  console.log("client details",client);
+  console.log("client.email",client.email);
+  console.log("client.workspaceId",client.workspaceId);
+  console.log("client.industryTypeId",client.client.industryTypeId);
   const clientEmailExists = await ClientModel.findOne({
     email: client.email,
   });
