@@ -10,7 +10,7 @@ const validationRules = {
       .items(
         Joi.object({
           name: Joi.string().required(),
-          name: Joi.string().allow("", null),
+          business: Joi.string().allow("", null),
           designation: Joi.string().optional().allow("", null).required(),
           email: Joi.string().email().optional().allow("", null).required(),
           phone: Joi.string().optional().allow("", null).required(),
