@@ -9,6 +9,12 @@ const partnerSchema = Schema({
   company: {
     type: String,
   },
+  accountName: {
+    type: String,
+  },
+  rate: {
+    type: String,
+  },
   clientId: {
     type: Schema.Types.ObjectId,
     ref: "Client",
@@ -31,7 +37,7 @@ const partnerSchema = Schema({
       designation: {
         type: String,
         required: true,
-      },
+      }, 
       email: {
         type: String,
         // Validate email format
