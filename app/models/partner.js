@@ -48,10 +48,10 @@ const partnerSchema = Schema({
         match: /^\d{10}$/,
         required: true,
       },
-      business: {
-        type: String,
-        required: false,
-      },
+      // business: {
+      //   type: String,
+      //   required: false,
+      // },
       isPrimary: {
         type: Boolean,
         default: true,
