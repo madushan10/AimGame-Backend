@@ -20,8 +20,7 @@ const partnerSchema = Schema({
     ref: "Client",
   },
   image: {
-    type: String, // Assuming you store the image URL or file path
-    // You might want to use a dedicated library or service for handling image uploads
+    type: String, 
   },
   workspaceId: {
     type: Schema.Types.ObjectId,
@@ -48,6 +47,10 @@ const partnerSchema = Schema({
         type: String,
         match: /^\d{10}$/,
         required: true,
+      },
+      business: {
+        type: String,
+        required: false,
       },
       isPrimary: {
         type: Boolean,
