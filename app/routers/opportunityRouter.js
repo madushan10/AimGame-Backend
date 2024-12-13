@@ -9,7 +9,7 @@ router
   .route("/")
   .get(opportunityController.getAllOpportunities)
   .post(opportunityController.createOpportunity);
-
+  
 router
   .route("/workspace/:workspaceId")
   .get(validateToken, opportunityController.getOpportunitiesByWorkspaceId);
@@ -28,8 +28,8 @@ router
 router
   .route("/:id")
   .get(validateToken, opportunityController.getOpportunityById)
-  .put(validateToken, opportunityController.updateOpportunity);
-
+  .put(validateToken, opportunityController.updateOpportunity)
+  .delete(opportunityController.deleteOpportunity);
 router
   .route("/:id/members")
   .get(validateToken, opportunityController.getOpportunityById);
